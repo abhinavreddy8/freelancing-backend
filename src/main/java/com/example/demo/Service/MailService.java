@@ -16,6 +16,10 @@ public class MailService {
 
         try {
 
+            System.out.println(
+                    "MAIL FUNCTION STARTED"
+            );
+
             OkHttpClient client =
                     new OkHttpClient();
 
@@ -36,6 +40,8 @@ public class MailService {
                             toEmail,
                             link
                     );
+
+            System.out.println(json);
 
             RequestBody body =
                     RequestBody.create(
@@ -65,6 +71,10 @@ public class MailService {
             Response response =
                     client.newCall(request)
                             .execute();
+
+            System.out.println(
+                    response.code()
+            );
 
             System.out.println(
                     response.body().string()

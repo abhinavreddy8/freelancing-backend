@@ -1,37 +1,78 @@
 package com.example.demo.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import okhttp3.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MailService {
 
-    @Autowired
-    JavaMailSender mailSender;
-
     public void sendVerificationMail(
+
             String toEmail,
+
             String link
+
     ) {
 
-        SimpleMailMessage message =
-                new SimpleMailMessage();
+        try {
 
-        message.setTo(toEmail);
+            OkHttpClient client =
+                    new OkHttpClient();
 
-        message.setSubject(
-                "Verify TalentNest Account"
-        );
+            MediaType mediaType =
+                    MediaType.parse(
+                            "application/json"
+                    );
 
-        message.setText(
-                "Click below link to verify your account:\n\n"
-                        + link
-        );
+            String json =
+                    """
+                    {
+                      "from": "onboarding@resend.dev",
+                      "to": ["%s"],
+                      "subject": "Verify TalentNest Account",
+                      "html": "<h2>Email Verification</h2><p>Click below link to verify your account:</p><a href='%s'>Verify Account</a>"
+                    }
+                    """.formatted(
+                            toEmail,
+                            link
+                    );
 
-        mailSender.send(message);
+            RequestBody body =
+                    RequestBody.create(
+                            json,
+                            mediaType
+                    );
 
+            Request request =
+                    new Request.Builder()
+                            .url(
+                                    "https://api.resend.com/emails"
+                            )
+                            .post(body)
+                            .addHeader(
+                                    "Authorization",
+                                    "Bearer " +
+                                            System.getenv(
+                                                    "RESEND_API_KEY"
+                                            )
+                            )
+                            .addHeader(
+                                    "Content-Type",
+                                    "application/json"
+                            )
+                            .build();
+
+            Response response =
+                    client.newCall(request)
+                            .execute();
+
+            System.out.println(
+                    response.body().string()
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
     }
-
 }

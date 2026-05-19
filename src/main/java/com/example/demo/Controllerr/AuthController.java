@@ -13,7 +13,7 @@ public class AuthController {
     @Autowired
     AuthService service;
 
-    // SEND MAIL
+    // REGISTER USER
     @PostMapping("/register")
     public String register(
             @RequestBody User user
@@ -22,28 +22,6 @@ public class AuthController {
         return service.sendVerification(
                 user
         );
-
-    }
-
-    // CLICK MAIL LINK
-    @GetMapping("/verify")
-    public String verify(
-
-            @RequestParam String name,
-
-            @RequestParam String email,
-
-            @RequestParam String role
-
-    ) {
-
-        service.verifyAndRegister(
-                name,
-                email,
-                role
-        );
-
-        return "Account Verified Successfully";
 
     }
 

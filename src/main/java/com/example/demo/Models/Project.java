@@ -1,9 +1,10 @@
 package com.example.demo.Models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,13 +27,15 @@ public class Project {
 
     private Double budget;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")  // ← ADD THIS
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate deadline;
 
     private String status;
 
+    @JsonProperty("selectedFreelancer")
     @Column(name = "selected_freelancer")
     private Integer selectedFreelancer;
 
+    @ElementCollection
     private List<String> skills;
 }

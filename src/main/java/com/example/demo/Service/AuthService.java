@@ -33,7 +33,7 @@ public class AuthService {
         // NGROK VERIFICATION LINK
         String verificationLink =
 
-                "https://temp.onrender.com"
+                "https://freelancing-backend-mscd.onrender.com/auth/verify?"
                         + "name=" + user.getName()
                         + "&email=" + user.getEmail()
                         + "&role=" + user.getRole();

@@ -11,10 +11,7 @@ public class AuthService {
     @Autowired
     AuthRepository repository;
 
-    @Autowired
-    MailService mailService;
-
-    // SEND VERIFICATION MAIL
+    // REGISTER USER
     public String sendVerification(
             User user
     ) {
@@ -30,47 +27,10 @@ public class AuthService {
             return "Email already exists";
         }
 
-        // NGROK VERIFICATION LINK
-        String verificationLink =
+        // SAVE USER IN DATABASE
+        repository.register(user);
 
-                "https://freelancing-backend-mscd.onrender.com/auth/verify?"
-                        + "name=" + user.getName()
-                        + "&email=" + user.getEmail()
-                        + "&role=" + user.getRole();
-
-        // SEND MAIL
-        mailService.sendVerificationMail(
-
-                user.getEmail(),
-
-                verificationLink
-
-        );
-
-        return "Verification Mail Sent";
-
-    }
-
-    // VERIFY USER AND REGISTER
-    public User verifyAndRegister(
-
-            String name,
-
-            String email,
-
-            String role
-
-    ) {
-
-        User user = new User();
-
-        user.setName(name);
-
-        user.setEmail(email);
-
-        user.setRole(role);
-
-        return repository.register(user);
+        return "Account Created";
 
     }
 

@@ -33,7 +33,7 @@ public class AuthService {
         // NGROK VERIFICATION LINK
         String verificationLink =
 
-                "https://hazard-impeach-latrine.ngrok-free.dev/auth/verify?"
+                "https://temp.onrender.com"
                         + "name=" + user.getName()
                         + "&email=" + user.getEmail()
                         + "&role=" + user.getRole();

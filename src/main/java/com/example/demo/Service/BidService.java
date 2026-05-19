@@ -71,7 +71,7 @@ public class BidService {
         );
 
         String flaskUrl =
-                "http://127.0.0.1:5000/rank-bids";
+                "https://freelancing-ml-api.onrender.com/rank-bids";
 
         ResponseEntity<List> response =
                 restTemplate.postForEntity(
@@ -179,7 +179,7 @@ public class BidService {
         // =====================================
 
         String flaskUrl =
-                "http://127.0.0.1:5000/generate-team";
+                "https://freelancing-ml-api.onrender.com/generate-team";
 
         // =====================================
         // CALL FLASK

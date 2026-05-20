@@ -9,22 +9,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reviews")
+@CrossOrigin   // ✅ Added
 public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
 
     @PostMapping
-    public String addReview(@RequestBody Review review){
-
+    public String addReview(@RequestBody Review review) {
         reviewService.addReview(review);
-
         return "Review added";
     }
 
     @GetMapping("/user/{userId}")
-    public List<Review> getReviews(@PathVariable Integer userId){
-
+    public List<Review> getReviews(@PathVariable Integer userId) {
         return reviewService.getReviews(userId);
     }
 }
